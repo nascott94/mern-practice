@@ -2,6 +2,9 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
+import studentRoutes from "./routes/student";
+
+app.use("/students", studentRoutes);
 
 //object has copy of express package
 const app = express();
@@ -19,7 +22,17 @@ const CONNECTION_URL =
 
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect(CONNECTION_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose
+  .connect(CONNECTION_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() =>
+    app.listen(PORT, () =>
+      console.log(`Connection is running on port: ${PORT}`)
+    )
+  )
+  .catch((err) => console.log(err.message));
+
+//deprecated...no longer need it?
+// mongoose.set("useFindAndModify", false);
