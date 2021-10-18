@@ -3,13 +3,8 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import studentRoutes from "./routes/student.js";
-
 //object has copy of express package
 const app = express();
-
-//first parameter is path for all routes in student.js file
-//second parameter is for imported studentRoutes above, every route starts from /student route
-app.use("/students", studentRoutes);
 
 //deep parsing that can deal with nested objects
 app.use(bodyParser.json({ limit: "20mb", extended: true }));
@@ -17,6 +12,9 @@ app.use(bodyParser.urlencoded({ limit: "20mb", extended: true }));
 
 //cross origin requests
 app.use(cors());
+//first parameter is path for all routes in student.js file
+//second parameter is for imported studentRoutes above, every route starts from /student route
+app.use("/students", studentRoutes);
 
 //connecting to mongo atlas
 const CONNECTION_URL =

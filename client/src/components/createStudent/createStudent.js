@@ -1,20 +1,10 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(1),
-      width: "25ch",
-    },
-  },
-}));
-
 export default function CreateStudent() {
-  const classes = useStyles();
   const [student, setStudent] = useState({
     regNo: 0,
     studentName: "",
@@ -23,18 +13,26 @@ export default function CreateStudent() {
   });
 
   const createStudent = () => {
-    //when user hits "create" button this event is fired, frontend data will go to backend
-    //react request goes to node and saved in datadase, all in form of JSON
-    axios.post("http://localhost:5000/students", student);
+    axios.post("http://localhost:5000/students", student).then(() => {
+      window.location.reload(false);
+    });
   };
 
   return (
     <>
-      <h2> Create Student</h2>
-      <form className={classes.root} noValidate autoComplete="off">
+      <h2>Create Student</h2>
+
+      <Box
+        component="form"
+        sx={{
+          "& > :not(style)": { m: 1, width: "25ch" },
+        }}
+        noValidate
+        autoComplete="off"
+      >
         <TextField
           id="outlined-basic"
-          label="Reg No."
+          label="Regestration No."
           variant="outlined"
           value={student.regNo}
           onChange={(event) => {
@@ -68,12 +66,10 @@ export default function CreateStudent() {
             setStudent({ ...student, section: event.target.value });
           }}
         />
-        <Button variant="contained" color="primary" onClick={createStudent}>
+        <Button color="secondary" onClick={createStudent}>
           Create
         </Button>
-      </form>
+      </Box>
     </>
   );
 }
-
-//in line 28-36, the value student. is referring to the object student set above
