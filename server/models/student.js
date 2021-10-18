@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 
 //for mongo schema, datatypes
+//needs to match the frontend, in createStudent in the frontend
 const studentSchema = mongoose.Schema({
-  registrationNumber: Number,
-  name: String,
+  regNo: Number,
+  studentName: String,
   grade: String,
   section: {
     type: String,
     default: "A",
   },
-  subjects: [String],
 });
 
 //model

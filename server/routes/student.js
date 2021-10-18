@@ -12,6 +12,6 @@ const router = express.Router();
 router.get("/", getStudents);
 
 //post route to create a new student user and call back function (from the controller student.js)
-router.get("/", createStudent);
+router.post("/", createStudent);
 
 export default router;
